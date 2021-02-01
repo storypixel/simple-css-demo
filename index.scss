@@ -1,0 +1,166 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+// Base
+html {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+a {
+  text-decoration: none;
+  color: rgb(76, 145, 235);
+}
+
+// Helpers
+.mt2 {
+  margin-top: 0.75rem;
+}
+
+// Styles
+.outer {
+  display: flex;
+  padding: 1em;
+  justify-content: center;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.rating-fig {
+  justify-items: center;
+  text-align: center;
+  width: 200px;
+  height: 130px;
+  position: relative;
+}
+
+.wheels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.rating-letter {
+  font-size: 60px;
+}
+
+.rating-desc {
+  font-size: 18px;
+}
+
+.info-heading {
+  display: flex;
+
+  // it's bad practice to select on an element like this
+  a {
+    margin-left: 0.5em;
+    border: 1px solid;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 12px;
+    font-family: Lucida Sans Typewriter, Lucida Console, monaco;
+  }
+}
+
+// stands for single line item
+.sli {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 8px;
+  padding-left: 32px;
+  position: relative;
+  align-items: center;
+  text-align: center;
+
+  // typically you don't select on position like this but time is short
+  :first-child {
+    text-align: left;
+  }
+
+  // if it weren't an interview i would add classes to each of the divs instead of select this way
+  // last child of the li is the 'total'
+  :last-child {
+    text-align: right;
+    // tricky...
+    &:empty {
+      // empty selector selects if the div has literally nothing in it
+      // in a react app you would just put the dashes in the div manually probably
+      &:before {
+        content: "--";
+        color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+  // this is a form of the "owl selector" which does the lines BETWEEN the items
+  & + & {
+    border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+
+    // There are other ways to specify that .sli-totals doesn't get the final line but...
+    &.sli-totals {
+      border-bottom: 0;
+    }
+  }
+}
+
+.sli-header,
+.sli-totals {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.sli__label {
+  &:before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    background: black;
+    border-radius: 50%;
+  }
+
+  // c1 = category 1 and so on. You want to keep the category on the list item so that if other children need to be selected using it, it's not a big deal
+  [data-cat="c5"] &:before {
+    background-color: rgb(67, 228, 139);
+  }
+  [data-cat="c1"] &:before {
+    background-color: orangered;
+  }
+  [data-cat="c2"] &:before {
+    background-color: orange;
+  }
+  [data-cat="c3"] &:before {
+    background-color: rgb(255, 230, 0);
+  }
+  [data-cat="c4"] &:before {
+    background-color: #2c88d4;
+  }
+  [data-cat="c5"] &:before {
+    background-color: rgb(67, 228, 139);
+  }
+}
+
+.sli-header {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+// Responsive wouldn't be too hard but it's beyond the scope of the interview
